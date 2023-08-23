@@ -41,3 +41,9 @@ Please reach out to your recruiting liaison to forward your questions to the hir
 
 #### Deliverable:
 A link to GitHub/or similar platform pointing to your complete solution.
+
+
+#### To run the code
+- npm run clean
+- npm run build
+- npm start
