@@ -2,7 +2,7 @@
 export interface ProductService<P> {
   // Get all products of TestMart
   // API endpoint to get data: https://dummyjson.com/products
-  // getAllProducts(): P[];
+  getAllProducts(): Promise<P[]>;
 
   // Get all products of TestMart using parameters
   // API endpoint to get data: https://dummyjson.com/products?limit={limit}&skip={skip}&select={comma separated fields of product}
@@ -39,6 +39,18 @@ class RegularProduct<P> implements ProductService<P> {
       throw error;
     }
   }
+
+  async getAllProducts(): Promise<P[]>{
+    try {
+      const response = await fetch("https://dummyjson.com/products");
+      const data = await response.json();
+      return data.products as P[];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+
+  } 
 }
 
 export default RegularProduct;
