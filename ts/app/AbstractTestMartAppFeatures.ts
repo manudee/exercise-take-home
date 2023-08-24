@@ -1,5 +1,6 @@
 import { CartService,Cart, Product} from '../contract/CartService'
 import RegularCart from '../contract/CartService'
+import RegularProduct from '../contract/ProductService'
 
 import { ProductService } from '../contract/ProductService'
 import { UserService } from '../contract/UserService'
@@ -118,53 +119,37 @@ class TestMartAppFeatures {
     async addProductImagesToUserCart(userId: number): Promise<any> {
 
       
-        const regularCart = new RegularCart<number[]>();
+        const regularCart = new RegularCart<Cart>();
         try {
-          const userId = 1;
+          
           const userCarts = await regularCart.getUserCarts(userId);
-          console.log(userCarts);
+          // console.dir(userCarts);
+          console.dir(userCarts[0].products)
+          const product_ids = [];
+          for(let product of userCarts[0].products){
+            product_ids.push(product.id)
+            console.log(product_ids)
+          }
+          console.log(product_ids)
+          const regularProduct = new RegularProduct<Product>();
+          for(let id of product_ids){
+            const product_response = regularProduct.getProduct(id)
+            console.log((await product_response).images)
+
+          }
+
 
         } catch(error){
           console.error('Error:', error);
   
         }
 
+        
+
     
     }
       
-  //     fetch("https://dummyjson.com/carts/user/1")
-  //     .then(response => response.json())
-  //     .then(data => {
-  //     // JSON Response data processing
-  //     const firstCart = data.carts;
-  //     console.log(firstCart)
-  //     const products = data.carts[0].products
-  //     console.log(products)
-  //     const product_ids = [];
-  //     const enrichedProducts: Product[] = [];
-
-  //     for(let product of products){
-  //       product_ids.push(product.id)
-  //     }
-  //     console.log(product_ids)
-
-  //     //fetch images for product ids
-  //     for(let id of product_ids){
-  //       fetch("https://dummyjson.com/products/"+id).then(response => response.json())
-  //       .then(data => {
-  //         console.log(id)
-  //         console.log(data.images)
-         
-
-  //       })
-
-  //     }
   
-  // }).catch(error => {
-  //   console.error("Get All Carts for a user failed:", error);
-  //   throw error;
-  // });
-
   }
     
 
@@ -183,4 +168,10 @@ const TestMart = new TestMartAppFeatures();
 
 //TBD
 const addImagesForTheUser = TestMart.addProductImagesToUserCart(1)
-console.log(addImagesForTheUser)
+
+// TestMart.addProductImagesToUserCart(1).then(function(data){
+//   console.log(data)
+// })
+
+// )
+// console.log(addImagesForTheUser)

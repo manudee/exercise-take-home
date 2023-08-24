@@ -43,17 +43,34 @@ export interface CartService<T> {
 }
 
 
-class RegularCart<T extends any[]> implements CartService<T[]> {
+class RegularCart<T> implements CartService<T> {
   
   async getUserCarts(userId: number): Promise<T[]> {
+    
     try {
       const response = await fetch("https://dummyjson.com/carts/user/" + userId);
       const data = await response.json();
-      return data;
+      return data.carts as T[];
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
     }
+
+    // return fetch("https://dummyjson.com/carts/user/" + userId)
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log(data)
+    //   return data;
+    // })
+
+    // try {
+    //   const response = await fetch("https://dummyjson.com/carts/user/" + userId);
+    //   const data = await response.json();
+    //   return data.carts;
+    // } catch (error) {
+    //   console.error('Error fetching data:', error);
+    //   throw error;
+    // }
   }
 }
 

@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const CartService_1 = __importDefault(require("../contract/CartService"));
+const ProductService_1 = __importDefault(require("../contract/ProductService"));
 // Note: Convert this class to concrete class and add implementation (missing body) to all functions. You will remove the word
 // `Abstract` from everywhere. This class is only kept `abstract` for the sake of interview exercise.
 class TestMartAppFeatures {
@@ -98,9 +99,20 @@ class TestMartAppFeatures {
         return __awaiter(this, void 0, void 0, function* () {
             const regularCart = new CartService_1.default();
             try {
-                const userId = 1;
                 const userCarts = yield regularCart.getUserCarts(userId);
-                console.log(userCarts);
+                // console.dir(userCarts);
+                console.dir(userCarts[0].products);
+                const product_ids = [];
+                for (let product of userCarts[0].products) {
+                    product_ids.push(product.id);
+                    console.log(product_ids);
+                }
+                console.log(product_ids);
+                const regularProduct = new ProductService_1.default();
+                for (let id of product_ids) {
+                    const product_response = regularProduct.getProduct(id);
+                    console.log((yield product_response).images);
+                }
             }
             catch (error) {
                 console.error('Error:', error);
@@ -116,4 +128,8 @@ const TestMart = new TestMartAppFeatures();
 // const worstRating = TestMart.getProductTitlesByWorseRating(4.5)
 //TBD
 const addImagesForTheUser = TestMart.addProductImagesToUserCart(1);
-console.log(addImagesForTheUser);
+// TestMart.addProductImagesToUserCart(1).then(function(data){
+//   console.log(data)
+// })
+// )
+// console.log(addImagesForTheUser)

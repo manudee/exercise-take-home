@@ -15,12 +15,26 @@ class RegularCart {
             try {
                 const response = yield fetch("https://dummyjson.com/carts/user/" + userId);
                 const data = yield response.json();
-                return data;
+                return data.carts;
             }
             catch (error) {
                 console.error('Error fetching data:', error);
                 throw error;
             }
+            // return fetch("https://dummyjson.com/carts/user/" + userId)
+            // .then(response => response.json())
+            // .then(data => {
+            //   console.log(data)
+            //   return data;
+            // })
+            // try {
+            //   const response = await fetch("https://dummyjson.com/carts/user/" + userId);
+            //   const data = await response.json();
+            //   return data.carts;
+            // } catch (error) {
+            //   console.error('Error fetching data:', error);
+            //   throw error;
+            // }
         });
     }
 }
