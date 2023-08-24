@@ -43,42 +43,24 @@ class TestMartAppFeatures {
    * Returns the cart with the highest total value.
    * @returns The cart with the highest total value.
    */
-   getCartWithHighestTotal(): Cart {
+   async getCartWithHighestTotal(): Promise<Cart> {
       
-      // const regularCart = new RegularCart<number[]>();
-      // try {
-      //   const userCarts = await regularCart.getUserCarts(1);
-      //   console.log(userCarts)
-      //   return userCarts;
-      // } catch(error){
-      //   console.error('Error:', error);
-
-      // }
-
-
-
-      fetch('https://dummyjson.com/carts')
-        .then(response => response.json())
-        .then(data => {
-          
-          //JSON Response data processing
-          const allCarts = data.carts;
-    
-          
-          const cartWithHighestTotal:Cart = allCarts.reduce((maxObj:Cart,obj:Cart)=> {
+      const regularCart = new RegularCart<Cart>();
+      try {
+        const userCarts = await regularCart.getAllCarts();
+        // return userCarts;
+        const cartWithHighestTotal:Cart = userCarts.reduce((maxObj:Cart,obj:Cart)=> {
             return obj.total > maxObj.total ? obj : maxObj;
-          }, allCarts[0])
+          }, userCarts[0])
       
-          console.log(cartWithHighestTotal);
           return cartWithHighestTotal;
+      } catch(error){
+        console.error('Error:', error);
 
-    }).catch(error => {
-      console.log("Get all carts api request failed", error);
-      throw error;
-    })
-    
-    return {"id":1,"products":[],"total":1,"discountedTotal":1,"userId":1,"totalProducts":1,"totalQuantity":1}
-
+      }
+    //return this when api has an issue and no highest total cart found
+    const default_cart = {"id":1,"products":[],"total":1,"discountedTotal":1,"userId":1,"totalProducts":1,"totalQuantity":1}
+    return default_cart;
 }
   
 
@@ -164,8 +146,10 @@ class TestMartAppFeatures {
 
 
 const TestMart = new TestMartAppFeatures();
-// const HighestValue = TestMart.getCartWithHighestTotal()
-// console.log(HighestValue)
+TestMart.getCartWithHighestTotal().then(function(HighestValue){
+  console.log(HighestValue)
+})
+
 
 
 
@@ -176,9 +160,9 @@ const TestMart = new TestMartAppFeatures();
 
 
 
-TestMart.addProductImagesToUserCart(1).then(function(data){
-  console.log(data)
-})
+// TestMart.addProductImagesToUserCart(1).then(function(data){
+//   console.log(data)
+// })
 
 // )
 // console.log(addImagesForTheUser)

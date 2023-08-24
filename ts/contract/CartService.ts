@@ -28,7 +28,7 @@ export interface CartService<T> {
 
   // Get all carts of TestMart
   // API endpoint to get data: https://dummyjson.com/carts
-  // getAllCarts(): T[];
+  getAllCarts(): Promise<T[]>;
 
   // getCartWithHighestTotal(): T;
   // getCartWithLowestTotal(): T;
@@ -55,22 +55,17 @@ class RegularCart<T> implements CartService<T> {
       console.error('Error fetching data:', error);
       throw error;
     }
+  }
 
-    // return fetch("https://dummyjson.com/carts/user/" + userId)
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log(data)
-    //   return data;
-    // })
-
-    // try {
-    //   const response = await fetch("https://dummyjson.com/carts/user/" + userId);
-    //   const data = await response.json();
-    //   return data.carts;
-    // } catch (error) {
-    //   console.error('Error fetching data:', error);
-    //   throw error;
-    // }
+  async getAllCarts(): Promise<T[]> {
+    try {
+      const response = await fetch("https://dummyjson.com/carts");
+      const data = await response.json();
+      return data.carts as T[];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
   }
 }
 
