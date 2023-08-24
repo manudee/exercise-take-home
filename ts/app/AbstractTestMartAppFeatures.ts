@@ -123,20 +123,29 @@ class TestMartAppFeatures {
         try {
           
           const userCarts = await regularCart.getUserCarts(userId);
-          // console.dir(userCarts);
-          console.dir(userCarts[0].products)
+          const user_products = userCarts[0].products
+
+
           const product_ids = [];
           for(let product of userCarts[0].products){
             product_ids.push(product.id)
-            console.log(product_ids)
           }
-          console.log(product_ids)
           const regularProduct = new RegularProduct<Product>();
+
           for(let id of product_ids){
             const product_response = regularProduct.getProduct(id)
-            console.log((await product_response).images)
+            const imagesForProduct = (await product_response).images
+
+            for(let productVal of user_products){
+              if(id == productVal.id){
+                productVal.images = imagesForProduct
+              }
+            }
+            
+    
 
           }
+          return user_products;
 
 
         } catch(error){
@@ -166,12 +175,10 @@ const TestMart = new TestMartAppFeatures();
 // const worstRating = TestMart.getProductTitlesByWorseRating(4.5)
 
 
-//TBD
-const addImagesForTheUser = TestMart.addProductImagesToUserCart(1)
 
-// TestMart.addProductImagesToUserCart(1).then(function(data){
-//   console.log(data)
-// })
+TestMart.addProductImagesToUserCart(1).then(function(data){
+  console.log(data)
+})
 
 // )
 // console.log(addImagesForTheUser)
