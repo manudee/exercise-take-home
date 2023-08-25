@@ -48,3 +48,4 @@ I have created a package.json with below commands.
 - npm run clean - `This will clean the dist directory and remove all the generated JS files`
 - npm run build - `This will build the code and recreate the JS files from typescript`
 - npm start - `This will run the code TestMartApp class and call all the necessary functions and their class implemenation from Interface which makes a call to dummy API.`
+- npm test - `This will run jest to trigger unit tests for the functions from test mart class against mocked API data`
