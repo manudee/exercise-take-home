@@ -1,6 +1,6 @@
 import TestMartAppFeatures from '../ts/app/AbstractTestMartAppFeatures'; 
-import RegularProduct from '../ts/contract/ProductService'; // Import actual implementation
-import RegularCart from '../ts/contract/CartService'; // Import actual implementation
+import RegularProduct from '../ts/contract/ProductService'; 
+import RegularCart from '../ts/contract/CartService'; 
 
 jest.mock('../ts/contract/CartService');
 jest.mock('../ts/contract/ProductService');
