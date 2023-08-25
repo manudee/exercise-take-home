@@ -127,7 +127,7 @@ class TestMartAppFeatures {
 
 
           const product_ids = [];
-          for(let product of userCarts[0].products){
+          for(let product of user_products){
             product_ids.push(product.id)
           }
           const regularProduct = new RegularProduct<Product>();
@@ -204,3 +204,6 @@ TestMart.addProductImagesToUserCart(1).then(function(productImagesToTheuser){
 })
 
 
+
+
+export default TestMartAppFeatures;
